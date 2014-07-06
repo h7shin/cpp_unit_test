@@ -103,11 +103,13 @@ namespace NAMESPACE {
 //--------------------------------------------------
 // This is for testing programs with stdin and stdout
 
-// cin_emulator injects its buffer into stdin (cin)
+// io_emulator injects its buffer into stdin/stdout
 // you can input buffer into io_emulator using output
 // stream operator <<
-// To use cin_emulator, call interupt();
-// and then call release(), to disable cin_emulator
+// you can also redirect cout bugger to io_emulator
+// which you can use it later using operator >> 
+// To use io_emulator, call interupt();
+// and then CALL release(), to disable io_emulator
 // see examples below for details
 namespace NAMESPACE {
     class io_emulator {
