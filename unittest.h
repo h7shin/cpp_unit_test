@@ -8,7 +8,7 @@
 
  UNIT TESTING MODULE FOR OBJECT ORIENTED SOFTWaRE
  AUTHOR hyunwookjamesshin at gmail dot com
- FreeBSD License 
+ FreeBSD License (See licence file for details)
 
 ***********************************************
 About
