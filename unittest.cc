@@ -8,8 +8,9 @@
 
  UNIT TESTING MODULE
  AUTHOR hyunwookjamesshin at gmail dot com
- CONTACT THE AUTHOR BEFORE USE OR MODIFICATION
- FreeBSD Licence
+ This is a free software under
+ FreeBSD Licence See Details in LICENCE FILE
+ 
 ***********************************************/
 //--------------------------------------------------
 // DO NOT CHANGE BELOW
