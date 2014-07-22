@@ -8,9 +8,8 @@
 
  UNIT TESTING MODULE
  AUTHOR hyunwookjamesshin at gmail dot com
- This is a free software under
- FreeBSD Licence See Details in LICENCE FILE
- 
+ CONTACT THE AUTHOR BEFORE USE OR MODIFICATION
+
 ***********************************************/
 //--------------------------------------------------
 // DO NOT CHANGE BELOW
@@ -65,4 +64,72 @@ namespace NAMESPACE {
             }
         }
     }
+    file_io_emulator::~file_io_emulator() {
+        std::cin.rdbuf( previous_i_buffer );
+        std::cout.rdbuf( previous_o_buffer );
+        delete inf;
+        delete outf;
+    }
+    void file_io_emulator::release() {
+        std::cin.rdbuf( previous_i_buffer );
+        std::cout.rdbuf( previous_o_buffer );
+    }
+    void file_io_emulator::interrupt() {
+        cerr << "Intrupting stdin and stdout" << endl;
+        previous_o_buffer = std::cout.rdbuf();
+        previous_i_buffer = std::cin.rdbuf();
+        inf = new ifstream(inputfile.c_str());
+        outf = new ofstream(outputfile.c_str());
+
+        if (inf->is_open()) {
+            std::cin.rdbuf(inf->rdbuf());
+        } else {
+            cerr << "Cannot open file" << inputfile << endl;
+        }
+
+        std::cout.rdbuf(outf->rdbuf());
+    }
+    file_io_emulator::file_io_emulator(std::string inputfile,
+                     std::string outputfile) :
+                    inputfile(inputfile),outputfile(outputfile) {
+        interrupt();
+    }
+    file_io_emulator::file_io_emulator(std::string inputfile,
+                     std::string outputfile,
+                     std::string reffile) :
+                    inputfile(inputfile),outputfile(outputfile),reffile(reffile) {
+        interrupt();
+    }
+    void file_io_emulator::checkoutput() {
+        ifstream outasinf(outputfile.c_str());
+        ifstream refasinf(reffile.c_str());
+        std::string line_out;
+        std::string line_ref;
+        int counter = 1;
+        if (outasinf.is_open() && refasinf.is_open()) {
+            if (outasinf.good() && refasinf.good()) {
+                while (getline(outasinf,line_out) && getline(refasinf,line_ref)) {
+                    if (line_out != line_ref) {
+                        cerr << "DIFFERENCE FOUND AT LINE: "
+                         << counter  << endl;
+                        cerr << "Reference " << line_ref << endl;
+                        cerr << "Output    " << line_out << endl;
+                        return;
+                    }
+                    counter++;
+                }
+                if (getline(outasinf,line_out)) {
+                    cerr << "DIFFERENCE FOUND FOR OUTPUT FILE ADDITIONAL LINE AT:"
+                    << counter << " "<< line_out << endl;
+                    return;
+                } else if (getline(refasinf,line_ref)) {
+                    cerr << "DIFFERENCE FOUND FOR REFERENCE FILE ADDITIONAL LINE AT:"
+                    << counter << " "<<line_ref << endl;
+                    return;
+                }
+            }
+        }
+        cerr << "Check passed!" << endl;
+    }
 }
+

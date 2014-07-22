@@ -31,16 +31,16 @@ About
 #include <iostream>
 #include <vector>
 #include <string>
-#include <sstream>  //io_emulator using stringstream
-#include <fstream>  //io_emulator using fstream
+#include <sstream>
+
 //-------------------------------------------------
-//  @note (unittest.h) Change the namespace for Unit Testing Suite (optional)
+// Change the namespace for Unit Testing Suite (optional)
 //-------------------------------------------------
 
 #define NAMESPACE my_name_space
 
 //--------------------------------------------------
-//  @note (unittest.h) OPTIONAL MACROS (see examples below for usage)
+// OPTIONAL MACROS (see examples below for usage)
 //--------------------------------------------------
 #define VOID        static void
 #define IS_UNITTEST public  NAMESPACE::UnitTestSuite
@@ -58,7 +58,7 @@ name.execute_all();
 name.execute_all();
 
 //------------------------------------------------
-//  @note (unittest.h) HOW TO RUN THE UNIT TESTS IN MAIN
+// HOW TO RUN THE UNIT TESTS IN MAIN
 //-------------------------------------------------
 /*
 // Option 1. Without Macro
@@ -99,13 +99,13 @@ namespace NAMESPACE {
     };
 }
 //--------------------------------------------------
-//  @note (unittest.h) IOSTREAM TESTING - USING STRINGSTREAM (DO NOT CHANGE)
+// IOSTREAM TESTING (DO NOT CHANGE)
 //--------------------------------------------------
 // This is for testing programs with stdin and stdout
 
-// io_emulator injects string buffer into stdin (cin)
-// and gets output as stringstream
-// stream operator "<<" is used to inject/get stream
+// cin_emulator injects its buffer into stdin (cin)
+// you can input buffer into io_emulator using output
+// stream operator <<
 // To use cin_emulator, call interupt();
 // and then call release(), to disable cin_emulator
 // see examples below for details
@@ -121,32 +121,9 @@ namespace NAMESPACE {
         void refresh();
         void fread(std::string filename);
         friend io_emulator & operator<< (io_emulator &ce, std::string s);
-        friend io_emulator & operator>> (io_emulator &ce, std::string &s);
+        friend io_emulator &operator>> (io_emulator &ce, std::string &s);
     };
 }
-//--------------------------------------------------
-// @note (unittest.h) IOSTREAM TESTING - USING FILES (DO NOT CHANGE)
-//--------------------------------------------------
-namespace NAMESPACE {
-    class file_io_emulator {
-        std::ifstream* inf;
-        std::ofstream* outf;
-        std::string inputfile;
-        std::string outputfile;
-        std::string reffile;        //reference file (optional)
-        std::streambuf* previous_i_buffer;
-        std::streambuf* previous_o_buffer;
-        void interrupt();           // activate redirection
 
-    public:
-        // for checking I/O with reference file
-        file_io_emulator(std::string inputfile,std::string outputfile,std::string reffile);
-        // for simply writing to the output file
-        file_io_emulator(std::string inputfile,std::string outputfile);
-        file_io_emulator();
-        void checkoutput();
-        ~file_io_emulator();
-        void release();           // restore cin/cout
-    };
-}
 #endif
+
