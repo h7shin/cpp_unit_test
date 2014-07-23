@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="example.cc" />
 		<Unit filename="example.h" />
 		<Unit filename="main.cc" />
 		<Unit filename="sample_file.txt" />

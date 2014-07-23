@@ -16,19 +16,34 @@
 //--------------------------------------------------
 using namespace std;
 
-void NAMESPACE::UnitTestSuite::add_unit(UNITTEST unittest)
-{
+int NAMESPACE::Track::num_failed = 0;
+int NAMESPACE::Track::total = 0;
+
+NAMESPACE::Track::Track() {
+    num_failed = 0;
+    total = 0;
+}
+void NAMESPACE::Track::add(bool passed) {
+    num_failed = (passed) ? num_failed : num_failed + 1;
+    total++;
+}
+void NAMESPACE::Track::print_status() {
+    cerr << "------------"<< endl;
+    cerr << "TOTAL CHECKS: " << total << " FAILED: " << num_failed << endl;
+}
+void NAMESPACE::UnitTestSuite::add_unit(UNITTEST unittest) {
     unittests.push_back(unittest);
 }
-void NAMESPACE::UnitTestSuite::execute_all()
-{
+void NAMESPACE::UnitTestSuite::execute_all() {
     int counter = 0;
+    Track t = Track();
     for (vector<UNITTEST>::iterator it = unittests.begin();
     it != unittests.end(); ++it) {
-        std::cerr << "___Test " << counter << endl;
+        std::cerr << "------------"<< std::endl << "TEST " << counter << endl;
         (*it)();
         counter++;
     }
+    t.print_status();
 }
 namespace NAMESPACE {
     io_emulator & operator<< (io_emulator &ce, std::string s) {
@@ -75,7 +90,6 @@ namespace NAMESPACE {
         std::cout.rdbuf( previous_o_buffer );
     }
     void file_io_emulator::interrupt() {
-        cerr << "Intrupting stdin and stdout" << endl;
         previous_o_buffer = std::cout.rdbuf();
         previous_i_buffer = std::cin.rdbuf();
         inf = new ifstream(inputfile.c_str());
@@ -105,6 +119,7 @@ namespace NAMESPACE {
         ifstream refasinf(reffile.c_str());
         std::string line_out;
         std::string line_ref;
+        Track t = Track();
         int counter = 1;
         if (outasinf.is_open() && refasinf.is_open()) {
             if (outasinf.good() && refasinf.good()) {
@@ -114,6 +129,7 @@ namespace NAMESPACE {
                          << counter  << endl;
                         cerr << "Reference " << line_ref << endl;
                         cerr << "Output    " << line_out << endl;
+                        t.add(0);
                         return;
                     }
                     counter++;
@@ -121,10 +137,12 @@ namespace NAMESPACE {
                 if (getline(outasinf,line_out)) {
                     cerr << "DIFFERENCE FOUND FOR OUTPUT FILE ADDITIONAL LINE AT:"
                     << counter << " "<< line_out << endl;
+                    t.add(0);
                     return;
                 } else if (getline(refasinf,line_ref)) {
                     cerr << "DIFFERENCE FOUND FOR REFERENCE FILE ADDITIONAL LINE AT:"
                     << counter << " "<<line_ref << endl;
+                    t.add(0);
                     return;
                 }
             }

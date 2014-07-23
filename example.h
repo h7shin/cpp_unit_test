@@ -3,17 +3,19 @@
 
 #include "unittest.h"
 
+///--------------------------------------------------
+/// @note A function to be tested in example 3
+///--------------------------------------------------
 int add(int x, int y);
 
-//--------------------------------------------------
-// @note (example.h) EXAMPLES: HOW TO MAKE CUSTOMIZE TESTING SUITE
-//--------------------------------------------------
+///--------------------------------------------------
+/// @note (example.h) Example 1.
+///--------------------------------------------------
 // Note that you can create a separate
 // testing file to run unit tests,
 // and simply remove that file from
 // the project once finished testing
 
-// @note  (example.h) Example 1.
 // example.h
 // ifndef _EXAMPLE_H_
 // define _EXAMPLE_H_
@@ -32,8 +34,10 @@ namespace NAMESPACEexample { // namespace is optional
     };
 }
 // endif
-//--------------------------------------------------
-// @note (example.h) Example 2.
+///--------------------------------------------------
+/// @note (example.h) Example 2.
+///--------------------------------------------------
+
 // example.h
 // ifndef _EXAMPLE_H_
 // define _EXAMPLE_H_
@@ -48,9 +52,9 @@ namespace NAMESPACEmacroexample { // namespace is optional
     };
 }
 // endif
-//--------------------------------------------------
-// @note (example.h) Example 3.
-
+///--------------------------------------------------
+/// @note (example.h) Example 3.
+///--------------------------------------------------
 // file input/output redirection and output checking
 
 namespace NAMESPACEfileexample {
