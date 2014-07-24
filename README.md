@@ -86,6 +86,12 @@ Test Level
         while (cin >> x >> y)
             cout << add(x, y) << endl;
     }
+-----------------------------------------------------------------
+Run
+
+    int main() {
+        RUN_UNIT_PAIRED(AddUnitTesting,TestingSuite,suite1);
+    }
 
 
 *****************************************************************
@@ -111,8 +117,8 @@ Group level (robot_test.h)
             RobotMovements();               // push all relevant test cases into contructor
         };
     }
-    -----------------------------------------------------------------
-    Suite Level (robot_test.cc)
+-----------------------------------------------------------------
+Suite Level (robot_test.cc)
 
     robot::RobotMovements::RobotMovements() : UnitTestSuite() {
         PUSH(move_up);
@@ -133,3 +139,9 @@ Test Level (robot_test.cc)
         fe.checkoutput();   // check output file (location enties) from cout
         fe.release();       // restore stdin and stdout
     }
+-----------------------------------------------------------------
+Run
+
+int main () {
+    RUN_UNIT(robot,RobotMovements,suite1);
+}
