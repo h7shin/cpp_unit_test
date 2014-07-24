@@ -35,11 +35,16 @@ Definitions
 
 
 *****************************************************************
+
 Designing the test suite (paired testing)
-
+-----------------------------------------------------------------
 Create test subdirectories <test_1>,<test_2>,.. under the directory containing
-executable file.
-
+executable file. Create test files:
+        test1/test1.in (input)
+        test1/test1.out (output)
+        test1/test1.ref (reference for output)
+        test1/test1.err (error)
+        test1/test1.erf (error reference)
 -----------------------------------------------------------------
 Group Level (add.h)
 
@@ -83,8 +88,9 @@ Test Level
 
 
 *****************************************************************
-Designing the test suite (User-defined/unpaired testing)
 
+Designing the test suite (User-defined/unpaired testing)
+-----------------------------------------------------------------
 Suppose that one wishes to test an algorithm that controls movements of a robot.
 -----------------------------------------------------------------
 Group level (robot_test.h)
