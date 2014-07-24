@@ -46,7 +46,7 @@ executable file. Create test files:
         test1/test1.err (error)
         test1/test1.erf (error reference)
 
------------------------------------------------------------------
+
 Group Level (add.h)
 
     namespace AddUnitTesting {
@@ -94,7 +94,7 @@ Designing the test suite (User-defined/unpaired testing)
 -----------------------------------------------------------------
 Suppose that one wishes to test an algorithm that controls movements of a robot.
 
------------------------------------------------------------------
+
 Group level (robot_test.h)
 
     #include <unittest.h>                   // add path to compiler unit test directory
