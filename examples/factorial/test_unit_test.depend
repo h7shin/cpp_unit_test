@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1406144544 source:c:\users\hyunwook\documents\spring2014\cs241\test_unit_test\main.cc
+	"some_test.h"
+
+1406142288 c:\users\hyunwook\documents\spring2014\cs241\test_unit_test\some_test.h
+	<unittest.h>
+
+1406144530 source:c:\users\hyunwook\documents\projectworking\unit_test\cpp_unit_test\unittest.cc
+	<unittest.h>
+	<fstream>
+
+1406144544 source:c:\users\hyunwook\documents\projectworking\unit_test\cpp_unit_test\examples\factorial\main.cc
+	"some_test.h"
+
+1406142288 c:\users\hyunwook\documents\projectworking\unit_test\cpp_unit_test\examples\factorial\some_test.h
+	<unittest.h>
+

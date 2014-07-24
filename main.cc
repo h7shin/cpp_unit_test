@@ -1,4 +1,4 @@
-#include "example.h"
+#include "examples/basic/example.h"
 
 int main () {
     RUN_UNIT(NAMESPACEexample,ExampleSuite,suite1);
