@@ -44,43 +44,43 @@ executable file.
 -----------------------------------------------------------------
 Group Level (add.h)
 
-namespace AddUnitTesting {
+    namespace AddUnitTesting {
 
-    // generic test algorithm
-    VOID add_test();
+        // generic test algorithm
+        VOID add_test();
 
-    // Create a function "test1" corresponding to test files
-    // test1/test1.in (input)
-    // test1/test1.out (output)
-    // test1/test1.ref (reference for output)
-    // test1/test1.err (error)
-    // test1/test1.erf (error reference)
+        // Create a function "test1" corresponding to test files
+        // test1/test1.in (input)
+        // test1/test1.out (output)
+        // test1/test1.ref (reference for output)
+        // test1/test1.err (error)
+        // test1/test1.erf (error reference)
 
-    VOID test1();
-    // ...
+        VOID test1();
+        // ...
 
-    class TestingSuite: IS_UNITTEST {
-    public:
-        TestingSuite();
-    };
-}
+        class TestingSuite: IS_UNITTEST {
+        public:
+            TestingSuite();
+        };
+    }
 
 -----------------------------------------------------------------
 Suite Level
 
-AddUnitTesting::TestingSuite::TestingSuite() : UnitTestSuite() {
-    PUSH(test1);
-    //...
-}
+    AddUnitTesting::TestingSuite::TestingSuite() : UnitTestSuite() {
+        PUSH(test1);
+        //...
+    }
 
 -----------------------------------------------------------------
 Test Level
 
-VOID test1() {
-    int x, y;
-    while (cin >> x >> y)
-        cout << add(x, y) << endl;
-}
+    VOID test1() {
+        int x, y;
+        while (cin >> x >> y)
+            cout << add(x, y) << endl;
+    }
 
 
 *****************************************************************
@@ -90,39 +90,39 @@ Suppose that one wishes to test an algorithm that controls movements of a robot.
 -----------------------------------------------------------------
 Group level (robot_test.h)
 
-#include <unittest.h>                   // add path to compiler unit test directory
+    #include <unittest.h>                   // add path to compiler unit test directory
 
-namespace robot {                       // robot namespace contains all tests/suites
-    VOID talk();                        // test case that involves talking
-    VOID move_left();                   // test case that involves moving left
-    VOID move_right();                  // test case that involves moving right
-    VOID move_up();                     // test case that involves moving up
-    VOID move_down();                   // test case that involves moving down
+    namespace robot {                       // robot namespace contains all tests/suites
+        VOID talk();                        // test case that involves talking
+        VOID move_left();                   // test case that involves moving left
+        VOID move_right();                  // test case that involves moving right
+        VOID move_up();                     // test case that involves moving up
+        VOID move_down();                   // test case that involves moving down
 
-    class RobotMovements: IS_UNITTEST {
-        public:
-        RobotMovements();               // push all relevant test cases into contructor
-    };
-}
------------------------------------------------------------------
-Suite Level (robot_test.cc)
+        class RobotMovements: IS_UNITTEST {
+            public:
+            RobotMovements();               // push all relevant test cases into contructor
+        };
+    }
+    -----------------------------------------------------------------
+    Suite Level (robot_test.cc)
 
-robot::RobotMovements::RobotMovements() : UnitTestSuite() {
-    PUSH(move_up);
-    PUSH(move_right);
-    //...
-}
+    robot::RobotMovements::RobotMovements() : UnitTestSuite() {
+        PUSH(move_up);
+        PUSH(move_right);
+        //...
+    }
 -----------------------------------------------------------------
 Test Level (robot_test.cc)
 
-VOID robot::move_up() {
+    VOID robot::move_up() {
 
-    // redirect I/O buffers stdin and stdout
-    UNIT::file_io_emulator fe("examples/move_up_instruction.input",
-                                   "examples/move_up_instruction.output",
-                                   "examples/move_up_instruction.ref");
-    struct robot = Robot();
-    robot.move();       // will read cin input to move up
-    fe.checkoutput();   // check output file (location enties) from cout
-    fe.release();       // restore stdin and stdout
-}
+        // redirect I/O buffers stdin and stdout
+        UNIT::file_io_emulator fe("examples/move_up_instruction.input",
+                                       "examples/move_up_instruction.output",
+                                       "examples/move_up_instruction.ref");
+        struct robot = Robot();
+        robot.move();       // will read cin input to move up
+        fe.checkoutput();   // check output file (location enties) from cout
+        fe.release();       // restore stdin and stdout
+    }
