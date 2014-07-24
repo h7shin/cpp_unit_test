@@ -10,9 +10,9 @@ Definitions
      group :  groups using namespace multiple test suites together
               and a pool of sample tests used by the test suites
 
-     suite :  each test suite group runs a sequence of sample tests
+     suite :  each test suite runs a sequence of sample tests
 
-     run:     run method in suite object runs the pushed tests
+     run:     RUN method in suite object runs the pushed tests
 
               RUN_UNIT<_<option>>(<namespace>,<suiteclass>,<name>) macro will run the tests
 
@@ -22,8 +22,7 @@ Definitions
               RUN_UNIT_PAIRED: the funtion takes care of file I/O buffer redirection
                                read from one input file under the test directory
 
-     test  :  a sample test to be run (does not have to be used at all, and can be
-              called by one or more test suites)
+     test  :  a sample test to be run
 
      check :  checks output file with the reference file
 
