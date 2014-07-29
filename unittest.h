@@ -58,6 +58,9 @@ name.execute_all();
 # define RUN_UNIT_PAIRED(nspace,suitename,name) nspace::suitename name = nspace::suitename();\
 name.execute_all_paired();
 
+# define RUN_UNIT_PAIRED_VERBOSE(nspace,suitename,name) nspace::suitename name = nspace::suitename();\
+name.execute_all_paired(1);
+
 # define RUN_UNIT_PAIRED_WRITE_ONLY(nspace,suitename,name) nspace::suitename name = nspace::suitename();\
 name.execute_all_paired_write_only();
 
@@ -152,7 +155,11 @@ namespace UNIT {
             // away from the client module
 
             // Use RUN_UNIT_PAIRED macro for this method
-            void execute_all_paired();
+            // verbose option if 1 prints the content of the output/error
+            // to the terminal
+            void execute_all_paired() {execute_all_paired(0);}
+
+            void execute_all_paired(bool verbose);
 
             // execute_all_paired_write_only execute all tests from
             // an input file, and writes to the reference (for both
@@ -220,6 +227,8 @@ namespace UNIT {
         std::streambuf* previous_o_buffer;
         std::streambuf* previous_e_buffer;
 
+        bool verbose;               // option for printintg out contents of files
+
         void interrupt();           // activate redirection
         Track t;                    // correctness checks tracker
 
@@ -232,6 +241,8 @@ namespace UNIT {
         friend file_io_emulator &operator<<(file_io_emulator&, std::string s);
 
         file_io_emulator();
+
+        file_io_emulator(bool verbose);
 
         // for checking I/O with reference file
         file_io_emulator(std::string inputfile,std::string outputfile,std::string reffile);

@@ -45,10 +45,11 @@ void NAMESPACE::UnitTestSuite::execute_all() {
     }
     t.print_status();
 }
-void NAMESPACE::UnitTestSuite::execute_all_paired() {
+
+void NAMESPACE::UnitTestSuite::execute_all_paired(bool verbose) {
     int counter = 0;
     Track t = Track();
-    file_io_emulator fe = file_io_emulator();
+    file_io_emulator fe = file_io_emulator(verbose);
     fe << "UNIT TESTING RESULTS " << "\n"; //overloaded operator
     fe << "------------"<< "\n";
     for (vector<UNITTEST>::iterator it = unittests.begin();
@@ -85,7 +86,6 @@ void NAMESPACE::UnitTestSuite::execute_all_paired_write_only() {
                  it->id+"/"+it->id+".erf"
                  );
         (it->test)();
-        fe.checkoutput();
         counter++;
     }
     fe.release();
@@ -185,6 +185,11 @@ namespace NAMESPACE {
         consolestream = new stringstream("");
         interrupt();
     }
+    file_io_emulator::file_io_emulator(bool verbose) : verbose(verbose),inputfile(""),outputfile(""),reffile(""),errorfile(""),errorreffile("")  {
+        t = Track();
+        consolestream = new stringstream("");
+        interrupt();
+    }
     file_io_emulator::file_io_emulator(std::string inputfile,
                      std::string outputfile) :
                     inputfile(inputfile),outputfile(outputfile),errorfile(""),errorreffile("") {
@@ -246,10 +251,17 @@ namespace NAMESPACE {
         ifstream refasinf(ref.c_str());
         std::string line_out;
         std::string line_ref;
+        bool out_avail;
+        bool ref_avail;
         int counter = 1;
         if (outasinf.is_open() && refasinf.is_open()) {
             if (outasinf.good() && refasinf.good()) {
-                while (getline(outasinf,line_out) && getline(refasinf,line_ref)) {
+                if (verbose) (*consolestream) << endl;
+                out_avail = getline(outasinf,line_out);
+                ref_avail = getline(refasinf,line_ref);
+
+                while (out_avail && ref_avail) {
+                    if (verbose) (*consolestream) << counter << " :" << line_out << endl;
                     if (line_out != line_ref) {
                         (*consolestream) << "DIFFERENCE FOUND AT LINE: "
                         << counter  << "\n";
@@ -259,14 +271,15 @@ namespace NAMESPACE {
                         return;
                     }
                     counter++;
-
+                    out_avail = getline(outasinf,line_out);
+                    ref_avail = getline(refasinf,line_ref);
                 }
-                if (getline(outasinf,line_out)) {
+                if (out_avail) {
                      (*consolestream) << "DIFFERENCE FOUND FOR OUTPUT FILE ADDITIONAL LINE AT: "
                     << counter << "\n"<< line_out << "\n";
                     t.add(0);
                     return;
-                } else if (getline(refasinf,line_ref)) {
+                } else if (ref_avail) {
                     (*consolestream)  << "DIFFERENCE FOUND FOR REFERENCE FILE ADDITIONAL LINE AT: "
                     << counter << "\n"<<line_ref << "\n";
                     t.add(0);
