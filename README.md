@@ -19,8 +19,10 @@ Definitions
 	          RUN_UNIT:        the user is responsible for I/O buffer redirection
                                the user can freely choose how to redirect input/output buffers
 
-              RUN_UNIT_PAIRED: the funtion takes care of file I/O buffer redirection
+              RUN_UNIT_PAIRED: the function takes care of file I/O buffer redirection
                                read from one input file under the test directory
+
+              RUN_UNIT_PAIRED_VERBOSE: same as RUN_UNIT_PAIRED with output to terminal
 
      test  :  a sample test to be run
 
@@ -142,6 +144,6 @@ Test Level (robot_test.cc)
 -----------------------------------------------------------------
 Run
 
-int main () {
-    RUN_UNIT(robot,RobotMovements,suite1);
-}
+    int main () {
+        RUN_UNIT(robot,RobotMovements,suite1);
+    }
